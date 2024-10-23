@@ -37,17 +37,20 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
     }
 
     private int calcReports(Employee employee, Set<String> uniqueReports) {
-        int count = 1;
+        int count = 0;
 
-        // conditional to distinguish distinct ids
-        if (uniqueReports.contains(employee.getEmployeeId())) {
-            count = 0;
+        // increment count only if the id is unique
+        if (uniqueReports.add(employee.getEmployeeId())) {
+            count = 1;
+        }
+
+        if(employee.getDirectReports() == null) {
+            return count;
         }
 
         // recursive call on every employee to count direct reports
         for (Employee directReport : employee.getDirectReports()) {
             count += calcReports(directReport, uniqueReports);
-            uniqueReports.add(directReport.getEmployeeId());
         }
         return count;
     }
