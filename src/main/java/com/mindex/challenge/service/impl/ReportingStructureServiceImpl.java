@@ -7,9 +7,12 @@ import com.mindex.challenge.service.ReportingStructureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -28,6 +31,10 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
 
         ReportingStructure reportingStructure = new ReportingStructure();
         Employee employee = employeeRepository.findByEmployeeId(id);
+
+        if (employee == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee with id " + id + " not found");
+
         int numberOfReports = calcReports(employee, uniqueReports);
 
         reportingStructure.setEmployee(employee);

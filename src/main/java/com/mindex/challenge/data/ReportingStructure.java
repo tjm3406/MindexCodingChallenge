@@ -1,5 +1,8 @@
 package com.mindex.challenge.data;
-
+/*
+This is the reportingStructure object. The constructor is empty and both fields have "getters" and "setters".
+This object represents the number of people reporting under an employee.
+ */
 public class ReportingStructure {
 
     private Employee employee;

@@ -152,11 +152,14 @@ public class ReportingStructureServiceImplTest {
         // test read reporting structure
         ReportingStructure johnReportingStructure = restTemplate.getForEntity(reportingStructureIdUrl, ReportingStructure.class, john.getEmployeeId()).getBody();
         ReportingStructure ringoReportingStructure = restTemplate.getForEntity(reportingStructureIdUrl, ReportingStructure.class, ringo.getEmployeeId()).getBody();
+        ReportingStructure paulReportingStructure = restTemplate.getForEntity(reportingStructureIdUrl, ReportingStructure.class, paul.getEmployeeId()).getBody();
 
         assertNotNull(johnReportingStructure);
         assertEquals(4, johnReportingStructure.getNumberOfReports());
         assertNotNull(ringoReportingStructure);
         assertEquals(2, ringoReportingStructure.getNumberOfReports());
+        assertNotNull(paulReportingStructure);
+        assertEquals(0, paulReportingStructure.getNumberOfReports());
 
     }
 }
