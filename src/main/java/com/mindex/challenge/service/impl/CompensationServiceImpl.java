@@ -4,7 +4,9 @@ import com.mindex.challenge.dao.CompensationRepository;
 import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.service.CompensationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class CompensationServiceImpl implements CompensationService {
@@ -19,6 +21,11 @@ public class CompensationServiceImpl implements CompensationService {
 
     @Override
     public Compensation read(String employeeId) {
-        return compensationRepository.findByEmployeeId(employeeId);
+        Compensation compensation = compensationRepository.findByEmployeeEmployeeId(employeeId);
+
+        if (compensation == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Compensation for employee with id " + employeeId + " not found");
+
+        return compensation;
     }
 }
